@@ -48,3 +48,14 @@ exports.authUser = async (req, res) => {
         res.status(400).json({ msg: 'Error ocurred.' });
     }
 }
+
+//Get user authenticated
+exports.userAuthenticated = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        res.json({ user });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: 'An error ocurred' });
+    }
+}
