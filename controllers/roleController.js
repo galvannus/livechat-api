@@ -15,6 +15,17 @@ exports.createRole = async (req, res) => {
         res.send("Role Created!!")
     } catch (error) {
         console.log(error);
-        res.status(400).send("Have an error");
+        res.status(400).json({ msg: 'An error ocurred' });
+    }
+}
+
+//Get role List
+exports.getRoleList = async (req, res) => {
+    try {
+        const roleList = await Role.find({});
+        res.json({ roleList });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ msg: 'An error ocurred' });
     }
 }

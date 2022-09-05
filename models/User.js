@@ -6,7 +6,7 @@ const UserSchema = mongoose.Schema({
         required: true,
         trim: true
     },
-    secondName: {
+    lastName: {
         type: String,
         required: true,
         trim: true
@@ -27,7 +27,7 @@ const UserSchema = mongoose.Schema({
         type: mongoose.Types.ObjectId,
         required: true
     },
-    can_save_messages: {
+    canSaveMessages: {
         type: Boolean,
         required: true
     },

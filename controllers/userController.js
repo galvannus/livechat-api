@@ -63,3 +63,29 @@ exports.createUser = async (req, res) => {
     }
 
 }
+
+exports.findUser = async (req, res) => {
+    //Extract last name
+    const { name } = req.body;
+
+    try{
+        //Search user
+        let userList = await User.find(
+            {
+                lastName: { $regex: name },
+                role: '62a95124e66466e03db0880b'//TODO: change for a list of roles
+            }
+        ).limit(4).select([ '_id','lastName']);//TODO: search for first name
+
+        /* if(userList){
+            return res.status(400).json({ msg: 'An error with the user.'});
+        } */
+
+        //Send result
+        res.json({ userList });
+
+    }catch(error){
+        console.log(error);
+        res.status(400).send('Have an error');
+    }
+}
