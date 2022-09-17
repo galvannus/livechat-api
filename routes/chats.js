@@ -28,4 +28,9 @@ router.delete('/:id',
     chatController.deleteChat
 );
 
+//Read chats
+router.get('/:id',
+    chatController.readChat
+);
+
 module.exports = router;

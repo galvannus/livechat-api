@@ -65,9 +65,9 @@ exports.createUser = async (req, res) => {
 }
 
 exports.findUser = async (req, res) => {
+    
     //Extract last name
-    const { name } = req.body;
-
+    const { name } = req.query;
     try{
         //Search user
         let userList = await User.find(
@@ -85,7 +85,6 @@ exports.findUser = async (req, res) => {
         res.json({ userList });
 
     }catch(error){
-        console.log(error);
         res.status(400).send('Have an error');
     }
 }
