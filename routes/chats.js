@@ -29,7 +29,7 @@ router.delete('/:id',
 );
 
 //Read chats
-router.get('/:id',
+router.get('/',
     chatController.readChat
 );
 

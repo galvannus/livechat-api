@@ -48,9 +48,9 @@ exports.createChat = async (req, res) => {
         currentChat._id = chat._id;
         
         //Get the user different to the creator
-        userChat = chat.users.filter(user => user._id.toString() !== createdBy);
+        userChat = await chat.users.filter(user => user._id.toString() !== createdBy);
         //Split the user from the array
-        userChat.forEach(user => userChat = user);
+        await userChat.forEach(user => userChat = user);
         currentChat.user = userChat;
         console.log(currentChat);
 
@@ -86,8 +86,6 @@ exports.updateChat = async (req, res) => {
     }
     //newMessage.date = Date.now();
 
-    
-
     try{
 
         //Get the chat
@@ -110,7 +108,7 @@ exports.updateChat = async (req, res) => {
         });
 
         if( !canCreateMessage ){
-            return res.status(401).json({ msg: 'Unauthorized.' })
+            return res.status(401).json({ msg: 'Unauthorized.' });
         }
 
         //Add Message
@@ -150,7 +148,7 @@ exports.deleteChat = async (req, res) =>{
         });
 
         if( !canDeleteChat ){
-            return res.status(401).json({ msg: 'Unauthorized.' })
+            return res.status(401).json({ msg: 'Unauthorized.' });
         }
 
         //Delete chat
@@ -168,7 +166,6 @@ exports.deleteChat = async (req, res) =>{
 exports.readChat = async (req, res) => {
 
     try {
-
         const { userId } = req.query;
 
         if(userId === ''){
@@ -176,11 +173,14 @@ exports.readChat = async (req, res) => {
         }
 
         let chats = await Chat.find({
-            users: { $all: [userId]}
+            'users._id':  userId 
         });
-
-        console.log(chats);
-    } catch (error) {
         
+        //Respond chats of the user
+        res.status(200).json(chats);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Server Error.');
     }
 }

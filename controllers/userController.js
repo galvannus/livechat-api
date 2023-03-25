@@ -69,13 +69,14 @@ exports.findUser = async (req, res) => {
     //Extract last name
     const { name } = req.query;
     try{
+        //TODO: respond only id, first name and last name without seconds names
         //Search user
         let userList = await User.find(
             {
                 lastName: { $regex: name },
                 role: '62a95124e66466e03db0880b'//TODO: change for a list of roles
             }
-        ).limit(4).select([ '_id','lastName']);//TODO: search for first name
+        ).limit(4).select([ '_id','firstName','lastName']);//TODO: search for firstName and lastName
 
         /* if(userList){
             return res.status(400).json({ msg: 'An error with the user.'});
