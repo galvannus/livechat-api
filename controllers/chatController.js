@@ -127,7 +127,8 @@ exports.updateChat = async (req, res) => {
 exports.deleteChat = async (req, res) =>{
 
     try {
-        
+        const { id } = req.params;
+        /* 
         //Get the chat
         let chat = await Chat.findById(req.params.id);
 
@@ -146,16 +147,21 @@ exports.deleteChat = async (req, res) =>{
                 canDeleteChat = true;
             }
         });
-
-        if( !canDeleteChat ){
+        */
+        
+        /* if( !canDeleteChat ){
             return res.status(401).json({ msg: 'Unauthorized.' });
-        }
+        } */
 
         //Delete chat
-        await Chat.findOneAndRemove({ _id: req.params.id });
+        const chatDeleted = await Chat.findOneAndRemove({ _id: id });
+
+        if( !chatDeleted ){
+            return res.status(404).json({ msg: "Chat doesn't exist."});
+        }
 
         //Message of confirmation
-        res.json({ msg: 'Chat deleted.' });
+        res.json( chatDeleted._id );
 
     } catch (error) {
         console.log(error);
