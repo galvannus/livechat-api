@@ -45,17 +45,17 @@ exports.createChat = async (req, res) => {
         //Save Chat
         await chat.save();
 
-        currentChat._id = chat._id;
+        /* currentChat._id = chat._id;
         
         //Get the user different to the creator
         userChat = await chat.users.filter(user => user._id.toString() !== createdBy);
         //Split the user from the array
         await userChat.forEach(user => userChat = user);
         currentChat.user = userChat;
-        console.log(currentChat);
+        console.log(currentChat); */
 
         //Confirmation
-        res.status(200).json(currentChat);
+        res.status(200).json(chat);
         
     } catch (error) {
         console.log(error);
@@ -181,6 +181,10 @@ exports.readChat = async (req, res) => {
         let chats = await Chat.find({
             'users._id':  userId 
         });
+
+        /* const chatFiltered = {};
+
+        await chats.forEach( chat =>  console.log(chat) ); */
         
         //Respond chats of the user
         res.status(200).json(chats);
